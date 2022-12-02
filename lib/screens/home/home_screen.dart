@@ -27,6 +27,9 @@ class HomeScreen extends StatelessWidget {
             print(_controller.product[index].title);
             return ItemProduct(
                 title: _controller.product[index].title!,
+                price: _controller.product[index].price.toString(),
+                rating: _controller.product[index].rating!.rate.toString(),
+                count: _controller.product[index].rating!.count.toString(),
                 onTap: () {
 
                 },
@@ -41,7 +44,15 @@ class HomeScreen extends StatelessWidget {
                       }));
                 },
                 onTapEdit: () {
-
+                  var  data = {
+                    'id': _controller.product[index].id!.toString(),
+                    "title": _controller.product[index].title.toString(),
+                    'price': _controller.product[index].price.toString(),
+                    'description': _controller.product[index].description.toString(),
+                    'image': _controller.product[index].image.toString(),
+                    'category': _controller.product[index].category.toString()
+                  };
+                  Get.toNamed('/update-product', arguments: data);
                 },
                 imageUrl: _controller.product[index].image!);
           },
@@ -54,6 +65,7 @@ class HomeScreen extends StatelessWidget {
           Get.toNamed("/add-product");
         },
         tooltip: 'Tambah Produk',
+        backgroundColor: kColorGreen,
         child: const Icon(Icons.add),
       ), //
     );

@@ -4,8 +4,8 @@ import 'package:geek_garden_test/utilities/service.dart';
 import 'package:geek_garden_test/widgets/alert.dart';
 import 'package:get/get.dart';
 
-class AddProductController extends GetxController {
-  final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+class EditProductController extends GetxController {
+  final GlobalKey<FormState> keyFormEdit = GlobalKey<FormState>();
   var isLoading = false.obs;
   var title = TextEditingController().obs;
   var category = TextEditingController().obs;
@@ -14,28 +14,28 @@ class AddProductController extends GetxController {
   var description = TextEditingController().obs;
   String? selectedValue;
 
-  //tambah produk ke api
-  Future postProduct() async {
+  //edit produk ke api
+  Future postProduct(String id) async {
     isLoading.value = true;
     try {
-      var response = await Dio().post('${Services.BASE_URL}/products',
-        options: Options(
-          followRedirects: false,
-          headers: {"Accept": "application/json",},
-          validateStatus: (status) => true,
-        ),
-        queryParameters: {
-          'title': title.value.text,
-          'price' : price.value.text,
-          'description': description.value.text,
-          'image': image.value.text,
-          'category': category.value.text
-        }
+      var response = await Dio().put('${Services.BASE_URL}/products/$id',
+          options: Options(
+            followRedirects: false,
+            headers: {"Accept": "application/json",},
+            validateStatus: (status) => true,
+          ),
+          queryParameters: {
+            'title': title.value.text,
+            'price' : price.value.text,
+            'description': description.value.text,
+            'image': image.value.text,
+            'category': category.value.text
+          }
       );
 
       print(" : ${response.data}");
       if (response.statusCode == 200) {
-        await AlertApp.alertSuccess("Sukses!", "produk berhasil ditambahkan !");
+        await AlertApp.alertSuccess("Sukses!", "produk berhasil diupdate !");
         Get.toNamed('/home');
         isLoading.value = false;
       } else {

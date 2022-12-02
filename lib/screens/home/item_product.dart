@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geek_garden_test/utilities/date_service.dart';
 import 'package:geek_garden_test/utilities/typography.dart';
 
 class ItemProduct extends StatelessWidget {
@@ -7,14 +6,15 @@ class ItemProduct extends StatelessWidget {
   final VoidCallback onTapDelete;
   final VoidCallback onTapEdit;
   final String title;
-  // final String date;
+  final String price;
+  final String rating;
+  final String count;
   final String imageUrl;
 
-  ItemProduct({required this.title, required this.onTap,required this.onTapDelete,required this.onTapEdit, required this.imageUrl});
+  ItemProduct({required this.title, required this.price, required this.rating, required this.count, required this.onTap,required this.onTapDelete,required this.onTapEdit, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    // String dateFormat = DateService.convertDateFormat(dateTimeString: date, oldFormat: "yyyy-MM-dd'T'HH:mm:ssZ", newFormat: "dd MMM yyyy");
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -33,6 +33,24 @@ class ItemProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: kTextBodyBold,),
+                    const SizedBox(
+                      height: 36,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Harga : $price", style: kTextBody,),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text("Rating : $rating", style: kTextBody,),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text("Count : $count", style: kTextBody,),
+                      ],
+                    )
                   ],
                 ),
               ),

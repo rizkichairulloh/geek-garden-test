@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:geek_garden_test/controller/add_product_controller.dart';
+import 'package:geek_garden_test/controller/home_controller.dart';
 import 'package:geek_garden_test/utilities/constants.dart';
 import 'package:geek_garden_test/utilities/typography.dart';
 import 'package:geek_garden_test/widgets/appbar.dart';
@@ -18,6 +19,7 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final AddProductController _controller = Get.put(AddProductController());
+  final HomeController _controllerHome = Get.put(HomeController());
   String? selectedValue;
 
   @override
@@ -63,7 +65,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   },
                 ),),
                 const SizedBox(height: 10,),
-                formDropdownButton("Kategori",
+                Obx(() => formDropdownButton("Kategori",
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2(
                       hint: Text(
@@ -75,7 +77,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               .hintColor,
                         ),
                       ),
-                      items: _controller.listCategory
+                      items: _controllerHome.listCategory
                           .map((item) =>
                           DropdownMenuItem<String>(
                             value: item,
@@ -87,11 +89,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                           ))
                           .toList(),
-                      value: selectedValue,
+                      value: _controller.selectedValue,
                       onChanged: (value) {
                         setState(() {
-                          selectedValue = value as String;
-                          _controller.category.value = value as TextEditingController;
+                          _controller.selectedValue = value as String;
+                          _controller.category.value.text = value;
                         });
                       },
                       buttonHeight: 40,
@@ -99,7 +101,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       itemHeight: 40,
                     ),
                   ),
-                ),
+                ),),
                 const SizedBox(height: 10,),
                 Obx(() => formCurrency("Harga",
                   controller: _controller.price.value,

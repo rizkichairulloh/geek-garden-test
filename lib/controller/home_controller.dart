@@ -11,12 +11,39 @@ class HomeController extends GetxController {
   var isLoadingDelete = false.obs;
   var product = <ProductModel>[].obs;
   var cek = ''.obs;
+  var listCategory = <String>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
-    getAllProduct();
+    await getAllProduct();
+    await getAllCategory();
     super.onInit();
+  }
+
+  Future getAllCategory() async {
+    try {
+      var response = await Dio().get('${Services.BASE_URL}/products/categories',
+        options: Options(
+          followRedirects: false,
+          headers: {"Accept": "application/json",},
+          validateStatus: (status) => true,
+        ),);
+
+      print(" : ${response.data}");
+      if (response.statusCode == 200) {
+        var data = response.data as List;
+        for(int i = 0; i < data.length; i++) {
+          listCategory.add(data[i]);
+        }
+        print("Kategori : " + listCategory.value.toString());
+        // data.map((e) => listCategory.addAll(e)).toList();
+      } else {
+        await AlertApp.alertError("Warning!", "terjadi kesalahan teknis");
+      }
+    } catch (e) {
+      e.toString();
+    }
   }
 
   Future getAllProduct() async {
@@ -32,23 +59,7 @@ class HomeController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = response.data as List;
-        print("DATA : ${data.toString()}");
-        List<ProductModel> list = [];
-        for (int i = 0; i < data.length; i++) {
-          print("DATA LOOPING : ${data[i]['id']}");
-          list.add(ProductModel(
-            id: data[i]['id'],
-            title: data[i]['title'],
-            description: data[i]['description'],
-            image: data[i]['image'],
-            category: data[i]['category'],
-            // price: data[i]['price'],
-            // rating: data[i]['rating'],
-          ));
-
-        }
-        product.value = list;
-        // product.value =  data.map((e) => ProductModel.fromJson(e)).toList();
+        product.value =  data.map((e) => ProductModel.fromJson(e)).toList();
         print("DATA : ${product.value}");
         isLoading.value = false;
       } else {
@@ -73,8 +84,8 @@ class HomeController extends GetxController {
 
       if (response.statusCode == 200) {
         await getAllProduct();
+        await AlertApp.alertSuccess("Sukses!", "produk berhasil dihapus !");
         Get.back();
-        AlertApp.alertSuccess("Sukses!", "produk berhasil dihapus !");
         isLoadingDelete.value = false;
       } else {
         isLoadingDelete.value = false;
