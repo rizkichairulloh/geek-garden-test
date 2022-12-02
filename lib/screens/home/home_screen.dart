@@ -4,6 +4,7 @@ import 'package:geek_garden_test/screens/home/item_product.dart';
 import 'package:geek_garden_test/utilities/constants.dart';
 import 'package:geek_garden_test/utilities/typography.dart';
 import 'package:geek_garden_test/widgets/appbar.dart';
+import 'package:geek_garden_test/widgets/modal_yes_no.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,6 +28,19 @@ class HomeScreen extends StatelessWidget {
             return ItemProduct(
                 title: _controller.product[index].title!,
                 onTap: () {
+
+                },
+                onTapDelete: () {
+                  Get.dialog(ModalYesNo(
+                      title: "Hapus", message: "Anda yakin menghapus produk ini?", icon: const Icon(Icons.delete_forever, color: Colors.red,),
+                      onTap: () async {
+                        await _controller.postDelete(_controller.product[index].id!.toString());
+                      },
+                      onTapNo: () {
+                        Get.back();
+                      }));
+                },
+                onTapEdit: () {
 
                 },
                 imageUrl: _controller.product[index].image!);

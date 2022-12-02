@@ -190,13 +190,10 @@ class AlertApp {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                                 height: 50.0,
                                 width: 50.0,
-                                child: Image.asset(
-                                  'assets/icon/alert/check.png',
-                                  filterQuality: FilterQuality.high,
-                                )),
+                                child: Icon(Icons.check, color: Colors.green,)),
                             const SizedBox(
                               height: 20.0,
                             ),
