@@ -5,8 +5,12 @@ import 'package:geek_garden_test/utilities/typography.dart';
 
 Widget buttonRaised(text, {textColor = Colors.white, bgColor, onPressed}) {
   return ElevatedButton(
+    child: Text(
+      text,
+      style: kTextButton.copyWith(color: textColor),
+    ),
     style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         horizontal: 15.0,
         vertical: 10.0,
       ),
@@ -17,27 +21,11 @@ Widget buttonRaised(text, {textColor = Colors.white, bgColor, onPressed}) {
       ),
     ),
     onPressed: onPressed,
-    child: Text(
-      text,
-      style: kTextButton.copyWith(color: textColor),
-    ),
   );
 }
 
 Widget buttonRaisedLoading({textColor = Colors.white, bgColor}) {
   return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15.0,
-        vertical: 10.0,
-      ),
-      primary: bgColor,
-      elevation: 0.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    ),
-    onPressed: (){},
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -55,6 +43,18 @@ Widget buttonRaisedLoading({textColor = Colors.white, bgColor}) {
 
       ],
     ),
+    style: ElevatedButton.styleFrom(
+      padding: EdgeInsets.symmetric(
+        horizontal: 15.0,
+        vertical: 10.0,
+      ),
+      primary: bgColor,
+      elevation: 0.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+    onPressed: (){},
   );
 }
 
@@ -102,13 +102,13 @@ Widget buttonOrange16Loading() {
 Widget buttonSky(text, {onPressed}) {
   return buttonRaised(
     text,
-    bgColor: kColorSky,
+    bgColor: kColorGreen,
     onPressed: onPressed,
   );
 }
 Widget buttonSkyLoading() {
   return buttonRaisedLoading(
-    bgColor: kColorSky,
+    bgColor: kColorGreen,
   );
 }
 

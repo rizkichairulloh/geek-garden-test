@@ -1,6 +1,9 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geek_garden_test/utilities/constants.dart';
 import 'package:geek_garden_test/utilities/typography.dart';
+import 'package:get/get.dart';
 
 Widget formInput(
     text, {
@@ -211,6 +214,8 @@ Widget formDropdownButton(
       ),
       const SizedBox(height: 10,),
       Container(
+        width: Get.width,
+        height: 52,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8.0),
@@ -224,3 +229,31 @@ Widget formDropdownButton(
     ],
   );
 }
+
+
+Widget formCurrency(text, {controller, hint, validator, autoValidateMode}) {
+  return formInput(
+    text,
+    validator: validator,
+    controller: controller,
+    autoValidateMode: autoValidateMode,
+    prefixIcon: Padding(
+      padding: EdgeInsets.all(14.0),
+      child: Text(
+        "Rp",
+        style: kTextBody.copyWith(fontWeight: FontWeight.w700),
+      ),
+    ),
+    textAlign: TextAlign.end,
+    hint: hint,
+    keyboardType: TextInputType.number,
+    inputFormatters: <TextInputFormatter>[
+      CurrencyTextInputFormatter(
+        locale: 'id',
+        decimalDigits: 0,
+        symbol: '',
+      ),
+    ],
+  );
+}
+

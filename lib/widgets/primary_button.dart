@@ -25,7 +25,7 @@ ElevatedButton primaryButton(
         side: border
             ? BorderSide(width: widthBorder, color: colorBorder ?? Colors.black)
             : BorderSide.none,
-        borderRadius: BorderRadius.circular(radius ?? 60.0),
+        borderRadius: BorderRadius.circular(radius ?? 10.0),
       ),
       minimumSize: max ? const Size(500.0, 50.0) : null,
     ),
